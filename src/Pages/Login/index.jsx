@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import logo from "../../assets/kiwify-logo.png";
 import { useNavigate } from "react-router-dom";
+import InputField from "../../Components/InputField";
+import Button from "../../Components/Button";
 
 const Login = () => {
   const {
@@ -43,61 +45,36 @@ const Login = () => {
             className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm block font-medium mb-1 text-start  leading-5 mb-1 text-gray-700"
-              >
-                E-mail
-              </label>
-              <div>
-                <input
-                  id="email"
-                  type="email"
-                  className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  }`}
-                  {...register("email", {
-                    required: "Esse campo é obrigatório",
-                    pattern: {
-                      value: /\S+@\S+\.\S+/,
-                      message: "O e-mail deve ser válido",
-                    },
-                  })}
-                  disabled={submitting}
-                />
-              </div>
-              {errors.email && (
-                <div className="flex text-red-500 text-sm  text-start">
-                  {errors.email.message}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6">
-              <label
-                htmlFor="password"
-                className="text-sm block font-medium text-start  leading-5  text-gray-700"
-              >
-                Senha
-              </label>
-              <input
-                id="password"
-                type="password"
-                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 w-full ${
-                  errors.password ? "border-red-500" : "border-gray-300"
-                }`}
-                {...register("password", {
+            <InputField
+              title={"E-mail"}
+              id={"email"}
+              type={"email"}
+              disabled={submitting}
+              register={{
+                ...register("email", {
                   required: "Esse campo é obrigatório",
-                })}
-                disabled={submitting}
-              />
-              {errors.password && (
-                <span className="flex text-red-500 text-sm  text-start">
-                  {errors.password.message}
-                </span>
-              )}
-            </div>
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "O e-mail deve ser válido",
+                  },
+                }),
+              }}
+              error={errors?.email?.message || ""}
+            />
+
+            <InputField
+              title={"Senha"}
+              id={"password"}
+              type={"password"}
+              disabled={submitting}
+              parentStyle={"mt-6"}
+              register={{
+                ...register("password", {
+                  required: "Esse campo é obrigatório",
+                }),
+              }}
+              error={errors?.password?.message || ""}
+            />
             <div className="mt-2 mb-2 flex items-center justify-end">
               <a
                 href="#"
@@ -109,13 +86,7 @@ const Login = () => {
 
             <div className="mt-6">
               <span className="block w-full rounded-md shadow-sm">
-                <button
-                  type="submit"
-                  className="leading-normal w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-                  disabled={submitting}
-                >
-                  {submitting ? "Entrar..." : "Entrar"}
-                </button>
+                <Button title={"Entrar"} disabled={submitting} />
               </span>
             </div>
           </form>
